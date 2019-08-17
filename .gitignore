@@ -1,7 +1,1 @@
 ##ignore this file##
-
-/target/
-
-*.yml
-generator.properties
-generatorConfig.xml
