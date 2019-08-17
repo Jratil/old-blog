@@ -1,13 +1,9 @@
 spring:
   datasource:
-    #    url: jdbc:mysql://localhost:3306/blog?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
-    #    username: root
-    #    password: ratil123
-    #    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       url: jdbc:mysql://localhost:3306/blog?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
       username: root
-      password: ratil123
+      password: ********
       driver-class-name: com.mysql.cj.jdbc.Driver
       # 初始化大小
       initial-size: 5
@@ -22,7 +18,6 @@ spring:
     database: 0
     host: localhost
     port: 6379
-    #    password: ratil123
 
     jedis:
       pool:
@@ -35,7 +30,7 @@ spring:
   mail:
     host: smtp.qq.com
     username: 1459676432@qq.com
-    password: jeisxeqrdnewfgbi
+    password: ****************
     properties:
       mail:
         smtp:
@@ -87,7 +82,7 @@ pagehelper:
 #file-upload:
 #  image-path: /www/wwwroot/blog-res/image/
 qiniu:
-    access-key: t-ILeUPNhooNItOYGnLt_KQI8y2aXdojkkpLQsqC
-    secret-key: cN9R6hKKY34RWRB7zOxo65RYDPzhqnSqgq39UrMA
-    bucket: ratil
+    access-key: *******************
+    secret-key: *******************
+    bucket: *****
     link-pre: http://pic.jratil.co/
