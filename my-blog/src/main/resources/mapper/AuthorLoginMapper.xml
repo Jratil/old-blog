@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jratil.blog.mapper.AuthorLoginMapper">
+	<resultMap id="BaseResultMap" type="co.jratil.blog.pojo.dataobject.AuthorLogin">
+		<constructor>
+			<arg column="author_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="login_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<arg column="login_ip" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		</constructor>
+	</resultMap>
+	<insert id="insertOrUpdate" parameterType="co.jratil.blog.pojo.dataobject.AuthorLogin">
+		insert into author_login (author_id, login_time, login_ip)
+		values (#{authorId,jdbcType=VARCHAR}, current_timestamp, #{loginIp,jdbcType=VARCHAR})
+		on duplicate key
+		update login_time = current_timestamp, login_ip = #{loginIp,jdbcType=VARCHAR};
+	</insert>
+	<insert id="insertSelective" parameterType="co.jratil.blog.pojo.dataobject.AuthorLogin">
+		insert into author_login
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="authorId != null">
+				author_id,
+			</if>
+			<if test="loginTime != null">
+				login_time,
+			</if>
+			<if test="loginIp != null">
+				login_ip,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="authorId != null">
+				#{authorId,jdbcType=VARCHAR},
+			</if>
+			<if test="loginTime != null">
+				#{loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginIp != null">
+				#{loginIp,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

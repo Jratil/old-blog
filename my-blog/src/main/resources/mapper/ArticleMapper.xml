@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jratil.blog.mapper.ArticleMapper">
+	<resultMap id="BaseResultMap" type="co.jratil.blog.pojo.dataobject.Article">
+		<id property="articleId" column="article_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="articleTitle" column="article_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="createTime" column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="modifyTime" column="modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="articleVisible" column="article_visible" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+		<result property="articleLike" column="article_like" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+		<result property="authorId" column="author_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="authorName" column="author_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="categoryId" column="category_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="categoryName" column="category_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="articleContent" column="article_content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+<!--		<constructor>-->
+<!--			<idArg column="article_id" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--			<arg column="article_title" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--			<arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>-->
+<!--			<arg column="modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>-->
+<!--			<arg column="article_visible" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+<!--			<arg column="article_like" javaType="java.lang.Integer" jdbcType="INTEGER"/>-->
+<!--			<arg column="author_id" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--			<arg column="author_name" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--			<arg column="category_id" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--			<arg column="category_name" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--		</constructor>-->
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="co.jratil.blog.pojo.dataobject.Article">
+		<constructor>
+			<idArg column="article_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="article_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<arg column="modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<arg column="article_visible" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+			<arg column="article_like" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<arg column="author_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="author_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="category_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="category_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="article_content" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+		</constructor>
+	</resultMap>
+	<sql id="Base_Column_List">
+		article_id,
+		article_title,
+		create_time,
+		modify_time,
+		article_visible,
+		article_like,
+		author_id,
+		author_name,
+		category_id,
+		category_name
+	</sql>
+	<sql id="Blob_Column_List">
+		article_content
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+
+		select
+		<include refid="Base_Column_List"/>
+		,
+		<include refid="Blob_Column_List"/>
+		from article
+		where article_id = #{articleId,jdbcType=VARCHAR}
+
+	</select>
+
+	<select id="selectLike" parameterType="java.lang.String" resultType="java.lang.Integer">
+
+		select article_like
+		from article
+		where article_id = #{articleId,jdbcType=VARCHAR}
+
+	</select>
+
+	<select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+		select
+		<include refid="Base_Column_List"/>
+		,
+		<include refid="Blob_Column_List"/>
+		from article
+		where author_id = #{authorId,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete
+		from article
+		where article_id = #{articleId,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="co.jratil.blog.pojo.dataobject.Article">
+		insert into article (article_id, article_title, create_time,
+		                     modify_time, article_visible, article_like,
+		                     author_id, author_name, category_id,
+		                     category_name, article_content)
+		values (#{articleId,jdbcType=VARCHAR}, #{articleTitle,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		        #{modifyTime,jdbcType=TIMESTAMP}, #{articleVisible,jdbcType=TINYINT}, #{articleLike,jdbcType=INTEGER},
+		        #{authorId,jdbcType=VARCHAR}, #{authorName,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR},
+		        #{categoryName,jdbcType=VARCHAR}, #{articleContent,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="co.jratil.blog.pojo.dataobject.Article">
+		insert into article
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="articleId != null">
+				article_id,
+			</if>
+			<if test="articleTitle != null">
+				article_title,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="articleVisible != null">
+				article_visible,
+			</if>
+			<if test="articleLike != null">
+				article_like,
+			</if>
+			<if test="authorId != null">
+				author_id,
+			</if>
+			<if test="authorName != null">
+				author_name,
+			</if>
+			<if test="categoryId != null">
+				category_id,
+			</if>
+			<if test="categoryName != null">
+				category_name,
+			</if>
+			<if test="articleContent != null">
+				article_content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="articleId != null">
+				#{articleId,jdbcType=VARCHAR},
+			</if>
+			<if test="articleTitle != null">
+				#{articleTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="articleVisible != null">
+				#{articleVisible,jdbcType=TINYINT},
+			</if>
+			<if test="articleLike != null">
+				#{articleLike,jdbcType=INTEGER},
+			</if>
+			<if test="authorId != null">
+				#{authorId,jdbcType=VARCHAR},
+			</if>
+			<if test="authorName != null">
+				#{authorName,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryId != null">
+				#{categoryId,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				#{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="articleContent != null">
+				#{articleContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="co.jratil.blog.pojo.dataobject.Article">
+		update article
+		<set>
+			<if test="articleTitle != null">
+				article_title = #{articleTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="articleVisible != null">
+				article_visible = #{articleVisible,jdbcType=TINYINT},
+			</if>
+			<if test="articleLike != null">
+				article_like = #{articleLike,jdbcType=INTEGER},
+			</if>
+			<if test="authorId != null">
+				author_id = #{authorId,jdbcType=VARCHAR},
+			</if>
+			<if test="authorName != null">
+				author_name = #{authorName,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryId != null">
+				category_id = #{categoryId,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				category_name = #{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="articleContent != null">
+				article_content = #{articleContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where article_id = #{articleId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="co.jratil.blog.pojo.dataobject.Article">
+		update article
+		set article_title   = #{articleTitle,jdbcType=VARCHAR},
+		    create_time     = #{createTime,jdbcType=TIMESTAMP},
+		    modify_time     = #{modifyTime,jdbcType=TIMESTAMP},
+		    article_visible = #{articleVisible,jdbcType=TINYINT},
+		    article_like    = #{articleLike,jdbcType=INTEGER},
+		    author_id       = #{authorId,jdbcType=VARCHAR},
+		    author_name     = #{authorName,jdbcType=VARCHAR},
+		    category_id     = #{categoryId,jdbcType=VARCHAR},
+		    category_name   = #{categoryName,jdbcType=VARCHAR},
+		    article_content = #{articleContent,jdbcType=LONGVARCHAR}
+		where article_id = #{articleId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="co.jratil.blog.pojo.dataobject.Article">
+		update article
+		set article_title   = #{articleTitle,jdbcType=VARCHAR},
+		    create_time     = #{createTime,jdbcType=TIMESTAMP},
+		    modify_time     = #{modifyTime,jdbcType=TIMESTAMP},
+		    article_visible = #{articleVisible,jdbcType=TINYINT},
+		    article_like    = #{articleLike,jdbcType=INTEGER},
+		    author_id       = #{authorId,jdbcType=VARCHAR},
+		    author_name     = #{authorName,jdbcType=VARCHAR},
+		    category_id     = #{categoryId,jdbcType=VARCHAR},
+		    category_name   = #{categoryName,jdbcType=VARCHAR}
+		where article_id = #{articleId,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateArticleLike" parameterType="Integer">
+		update article
+		set article_like = #{articleLike,jdbcType=INTEGER}
+		where article_id = #{articleId,jdbcType=VARCHAR}
+	</update>
+</mapper>

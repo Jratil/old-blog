@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jratil.blog.mapper.AuthorFollowMapper">
+  <resultMap id="BaseResultMap" type="co.jratil.blog.pojo.dataobject.AuthorFollow">
+    <constructor>
+      <arg column="author_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="follow_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="follow_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="co.jratil.blog.pojo.dataobject.AuthorFollow">
+    insert into author_follow (author_id, follow_id, follow_name
+      )
+    values (#{authorId,jdbcType=VARCHAR}, #{followId,jdbcType=VARCHAR}, #{followName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="co.jratil.blog.pojo.dataobject.AuthorFollow">
+    insert into author_follow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="followId != null">
+        follow_id,
+      </if>
+      <if test="followName != null">
+        follow_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="authorId != null">
+        #{authorId,jdbcType=VARCHAR},
+      </if>
+      <if test="followId != null">
+        #{followId,jdbcType=VARCHAR},
+      </if>
+      <if test="followName != null">
+        #{followName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

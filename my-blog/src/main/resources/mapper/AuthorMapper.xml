@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jratil.blog.mapper.AuthorMapper">
+	<resultMap id="BaseResultMap" type="co.jratil.blog.pojo.dataobject.Author">
+		<constructor>
+			<idArg column="author_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="author_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="author_account" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="author_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="author_gender" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+			<arg column="author_birthday" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<arg column="author_avatar" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="author_permission" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+			<arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		</constructor>
+	</resultMap>
+	<sql id="Base_Column_List">
+		author_id,
+		author_name,
+		author_account,
+		author_password,
+		author_gender,
+		author_birthday,
+		author_avatar,
+		author_permission,
+		create_time
+	</sql>
+	<select id="findAuthorById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from author
+		where author_id = #{authorId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findAuthorByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from author
+		where author_account = #{authorAccount,jdbcType=INTEGER}
+	</select>
+
+	<select id="findAllAuthor" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from author
+	</select>
+
+	<delete id="deleteAuthor" parameterType="java.lang.String">
+		delete
+		from author
+		where author_account = #{authorAccount,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="addAuthor" parameterType="co.jratil.blog.pojo.dataobject.Author">
+		insert ignore into author (author_id, author_name, author_account,
+		                           author_password, author_gender, author_birthday,
+		                           author_avatar, author_permission, create_time)
+		values (#{authorId,jdbcType=VARCHAR}, #{authorName,jdbcType=VARCHAR}, #{authorAccount,jdbcType=VARCHAR},
+		        #{authorPassword,jdbcType=VARCHAR}, #{authorGender,jdbcType=TINYINT},
+		        #{authorBirthday,jdbcType=TIMESTAMP},
+		        #{authorAvatar,jdbcType=VARCHAR}, #{authorPermission,jdbcType=TINYINT},
+		        #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+
+	<insert id="addAuthorSelective" parameterType="co.jratil.blog.pojo.dataobject.Author">
+
+		insert ignore into author
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="authorId != null">
+				author_id,
+			</if>
+			<if test="authorName != null">
+				author_name,
+			</if>
+			<if test="authorAccount != null">
+				author_account,
+			</if>
+			<if test="authorPassword != null">
+				author_password,
+			</if>
+			<if test="authorGender != null">
+				author_gender,
+			</if>
+			<if test="authorBirthday != null">
+				author_birthday,
+			</if>
+			<if test="authorAvatar != null">
+				author_avatar,
+			</if>
+			<if test="authorPermission != null">
+				author_permission,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="authorId != null">
+				#{authorId},
+			</if>
+			<if test="authorName != null">
+				#{authorName},
+			</if>
+			<if test="authorAccount != null">
+				#{authorAccount},
+			</if>
+			<if test="authorPassword != null">
+				#{authorPassword},
+			</if>
+			<if test="authorGender != null">
+				#{authorGender},
+			</if>
+			<if test="authorBirthday != null">
+				#{authorBirthday},
+			</if>
+			<if test="authorAvatar != null">
+				#{authorAvatar},
+			</if>
+			<if test="authorPermission != null">
+				#{authorPermission},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByAuthor" parameterType="co.jratil.blog.pojo.dataobject.Author">
+		update author
+		set author_name       = #{authorName,jdbcType=VARCHAR},
+		    author_account    = #{authorAccount,jdbcType=VARCHAR},
+		    author_password   = #{authorPassword,jdbcType=VARCHAR},
+		    author_gender     = #{authorGender,jdbcType=TINYINT},
+		    author_birthday   = #{authorBirthday,jdbcType=TIMESTAMP},
+		    author_avatar     = #{authorAvatar,jdbcType=VARCHAR},
+		    author_permission = #{authorPermission,jdbcType=TINYINT},
+		    create_time       = #{createTime,jdbcType=TIMESTAMP}
+		where author_id = #{authorId,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByAuthorSelective" parameterType="co.jratil.blog.pojo.dataobject.Author">
+		update author
+		<set>
+			<if test="authorName != null">
+				author_name = #{authorName},
+			</if>
+			<if test="authorPassword != null">
+				author_password = #{authorPassword},
+			</if>
+			<if test="authorGender != null">
+				author_gender = #{authorGender},
+			</if>
+			<if test="authorBirthday != null">
+				author_birthday = #{authorBirthday},
+			</if>
+			<if test="authorAvatar != null">
+				author_avatar = #{authorAvatar},
+			</if>
+			<if test="authorPermission != null">
+				author_permission = #{authorPermission},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</set>
+		where author_id = #{authorId}
+	</update>
+</mapper>
