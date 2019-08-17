@@ -44,7 +44,7 @@ public class ArticleController {
         return ResultVOUtil.success(allArticle);
     }
     
-    @RequestMapping("/write")
+    @PostMapping("/write")
     public ResultVO write(@RequestBody @Validated ArticleDTO articleDTO, BindingResult result, HttpServletRequest request) {
 
         if (result.hasErrors()) {
@@ -104,7 +104,7 @@ public class ArticleController {
         return ResultVOUtil.success(articleDTOList);
     }
 
-    @RequestMapping("/like/add")
+    @PostMapping("/like/add")
     public ResultVO addLike(String articleId) {
         if (StringUtils.isEmpty(articleId)) {
             log.error("【文章操作】增加喜欢出错，文章id不能为空，articleId={}", articleId);
@@ -116,7 +116,7 @@ public class ArticleController {
         return ResultVOUtil.success(articleLike);
     }
 
-    @RequestMapping("/like/reduce")
+    @DeleteMapping("/like/reduce")
     public ResultVO reduceLike(String articleId) {
         if (StringUtils.isEmpty(articleId)) {
             log.error("【文章操作】增加喜欢出错，文章id不能为空，articleId={}", articleId);

@@ -1,0 +1,32 @@
+package co.jratil.blog.pojo.dataobject;
+
+public class UserRole {
+    private String authorId;
+
+    private String role;
+
+    public UserRole(String authorId, String role) {
+        this.authorId = authorId;
+        this.role = role;
+    }
+
+    public UserRole() {
+        super();
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId == null ? null : authorId.trim();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role == null ? null : role.trim();
+    }
+}

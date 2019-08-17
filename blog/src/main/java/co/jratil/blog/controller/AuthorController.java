@@ -105,7 +105,7 @@ public class AuthorController {
         return ResultVOUtil.success();
     }
 
-    @PostMapping("/find_password")
+    @PostMapping("/forget_password")
     public ResultVO forgetPassword(@Validated(AuthorForm.ForgetPassword.class) @RequestBody AuthorForm authorForm,
                                    BindingResult bindingResult) {
 

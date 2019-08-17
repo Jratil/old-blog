@@ -50,7 +50,7 @@ public class ArticleCategoryController {
         return ResultVOUtil.success();
     }
 
-    @PostMapping("/delete/id")
+    @DeleteMapping("/delete")
     public ResultVO deleteCategory(@RequestParam("categoryId") String categoryId) {
 
         if(StringUtils.isEmpty(categoryId)){
