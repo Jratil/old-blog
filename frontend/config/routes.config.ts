@@ -19,14 +19,25 @@ export const menuRoutesData: IRoute[] = [
     },
     {
         path: '/expire',
-        title: '过期',
+        title: '过期'
         // component: './expire',
         // noShowInMenu: true
     },
     {
         path: '/post',
-        title: '文章详情',
+        title: '文章详情'
         // active: 'projects'
+    }
+]
+
+export const loginRoutes: IRoute[] = [
+    {
+        path: '/login',
+        component: './login/index'
+    },
+    {
+        path: '/register'
+        // component: './login/Register'
     }
 ]
 
@@ -40,14 +51,7 @@ export default [
                 redirect: './index'
             },
             ...menuRoutesData,
-            {
-                path: '/login',
-                // component: './login/index'
-            },
-            {
-                path: '/register',
-                // component: './login/Register'
-            }
+            ...loginRoutes
         ]
     }
 ]
