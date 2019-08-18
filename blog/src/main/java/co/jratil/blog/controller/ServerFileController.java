@@ -35,7 +35,7 @@ public class ServerFileController {
      * @param response respinse
      * @return 前端所需的必须的格式
      */
-    @RequestMapping("/upload/pic")
+    @PostMapping("/upload/pic")
     public Object uploadImage(@RequestParam(value = "editormd-image-file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         String realFileName = file.getOriginalFilename();
         if (realFileName == null) {
@@ -55,7 +55,7 @@ public class ServerFileController {
         return result;
     }
 
-    @RequestMapping("/file/delete/{key}")
+    @PostMapping("/file/delete/{key}")
     public ResultVO deleteServerFile(@PathVariable("key") String key) {
 
         if (StringUtils.isEmpty(key)) {
