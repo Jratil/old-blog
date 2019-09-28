@@ -25,7 +25,9 @@ instance.interceptors.response.use(
     function(response) {
         // 对响应数据做点什么
         if (response.status === 200) {
-            return response.data
+            //  修改字段名 message 为 msg，防止与 antd message 组件命名冲突
+            const { message, ...otherData } = response.data
+            return { msg: message, ...otherData }
         }
 
         return response
