@@ -1,3 +1,3 @@
 export default {
-    authorLogin: 'POST /author/login'
+    authorLogin: 'POST /api/author/login'
 }

@@ -1,7 +1,7 @@
 import routes from './routes.config'
 import webpack from './webpack.config'
 
-// const targetAddr = 'http://120.79.172.32:8866/'
+const targetAddr = 'http://120.79.172.32:8866/'
 
 export default {
     treeShaking: true,
@@ -28,18 +28,19 @@ export default {
             }
         ]
     ],
-    // proxy: {
-    //     '/v2': {
-    //         target: `${targetAddr}/v2`,
-    //         changeOrigin: true,
-    //         pathRewrite: {
-    //             '^/v2': ''
-    //         }
-    //     }
-    // },
+    proxy: {
+        '/api': {
+            target: `${targetAddr}`,
+            changeOrigin: true,
+            pathRewrite: {
+                '^/api': ''
+            }
+        }
+    },
     targets: {
         ie: 10
     },
+    hash: true,
     routes,
     ...webpack
 }
