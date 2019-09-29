@@ -1,7 +1,12 @@
 import routes from './routes.config'
 import webpack from './webpack.config'
 
-const targetAddr = 'http://120.79.172.32:8866/'
+const addr = {
+    dev: 'http://120.79.172.32:8866/',
+    mock: 'http://localhost:6365/'
+}
+
+const targetAddr = addr[process.env.UMI_ENV || 'dev']
 
 export default {
     treeShaking: true,
