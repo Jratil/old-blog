@@ -36,8 +36,12 @@ export const loginRoutes: IRoute[] = [
         component: './login/index'
     },
     {
-        path: '/register'
-        // component: './login/Register'
+        path: '/forget',
+        component: './login/Forget'
+    },
+    {
+        path: '/register',
+        component: './login/Register'
     }
 ]
 

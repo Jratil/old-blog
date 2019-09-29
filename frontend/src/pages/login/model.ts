@@ -7,7 +7,15 @@ const LoginModal = {
     state: null,
     effects: {
         *login({ payload, callback }, { call, put }) {
-            let data = yield call(auth.authorLogin, payload)
+            let data = yield call(auth.authLogin, payload)
+            if (data && callback) callback(data)
+        },
+        *forget({ payload, callback }, { call, put }) {
+            let data = yield call(auth.authForget, payload)
+            if (data && callback) callback(data)
+        },
+        *getVerifyCode({ payload, callback }, { call, put }) {
+            let data = yield call(auth.authVerifyCode, payload)
             if (data && callback) callback(data)
         }
     },
