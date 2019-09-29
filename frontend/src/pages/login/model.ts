@@ -7,9 +7,8 @@ const LoginModal = {
     state: null,
     effects: {
         *login({ payload, callback }, { call, put }) {
-            console.log(payload)
             let data = yield call(auth.authorLogin, payload)
-            console.log(data, 23333)
+            if (data && callback) callback(data)
         }
     },
     reducers: {

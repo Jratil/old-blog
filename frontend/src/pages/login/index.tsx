@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { router } from 'umi'
 import { Dispatch } from 'redux'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox, message } from 'antd'
 import { connect } from 'dva'
 import { FormComponentProps } from 'antd/lib/form'
 import { MIcon } from '@/components'
@@ -10,6 +10,7 @@ import styles from './index.less'
 
 interface MProps extends FormComponentProps {
     dispatch: Dispatch
+    loading: boolean
 }
 
 const FormItem = Form.Item
@@ -17,7 +18,7 @@ const FormItem = Form.Item
 const rules = { account: [{ required: true, message: '请输入账号' }], password: [{ required: true, message: '请输入密码' }] }
 
 const Login: React.FC<MProps> = props => {
-    const { dispatch, form } = props
+    const { dispatch, form, loading } = props
     const { getFieldDecorator, setFieldsValue } = form
     const [account, setAccount] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -48,9 +49,20 @@ const Login: React.FC<MProps> = props => {
                     window.localStorage.setItem('account', '')
                     window.localStorage.setItem('password', '')
                 }
-                console.log(6565)
                 //  调用登录接口
-                dispatch({ type: 'login/login', payload: { account, password } })
+                dispatch({
+                    type: 'login/login',
+                    payload: { account, password },
+                    callback: ({ code, msg }) => {
+                        if (code === 0) {
+                            router.push('/')
+                            //  重载一次，防止账号切换带来的问题
+                            window.location.reload()
+                        } else {
+                            message.error(msg)
+                        }
+                    }
+                })
             }
         })
     }
@@ -60,10 +72,13 @@ const Login: React.FC<MProps> = props => {
         router.push('/register')
     }
 
-    const handleForget = evt => {}
+    const handleForget = evt => {
+        evt.preventDefault()
+        router.push('/forget')
+    }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form className={styles.formWrapper} onSubmit={handleSubmit}>
             <FormItem>
                 {getFieldDecorator('account', {
                     initialValue: account,
@@ -83,23 +98,26 @@ const Login: React.FC<MProps> = props => {
                     {getFieldDecorator('remember', {
                         valuePropName: 'checked',
                         initialValue: true
-                    })(<Checkbox>记住</Checkbox>)}
+                    })(<Checkbox>记住密码</Checkbox>)}
                     <Button type="link" size="small" onClick={handleForget}>
                         找回密码
                     </Button>
                 </div>
             </FormItem>
 
-            <FormItem>
-                <div className={styles.btnWrapper}>
-                    <Button type="primary" onClick={handleSubmit}>
-                        登录
-                    </Button>
-                    <Button onClick={handelRegister}>注册</Button>
-                </div>
-            </FormItem>
+            <Button type="primary" onClick={handleSubmit} block loading={loading}>
+                登录
+            </Button>
+
+            <Button type="link" onClick={handelRegister} block>
+                没有账号？点我注册
+            </Button>
         </Form>
     )
 }
 
-export default Form.create()(connect()(Login))
+export default Form.create()(
+    connect(({ loading }) => ({
+        loading: loading.effects['login/login']
+    }))(Login)
+)
