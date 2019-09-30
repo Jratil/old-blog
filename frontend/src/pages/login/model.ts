@@ -14,6 +14,10 @@ const LoginModal = {
             let data = yield call(auth.authForget, payload)
             if (data && callback) callback(data)
         },
+        *register({ payload, callback }, { call, put }) {
+            let data = yield call(auth.authRegister, payload)
+            if (data && callback) callback(data)
+        },
         *getVerifyCode({ payload, callback }, { call, put }) {
             let data = yield call(auth.authVerifyCode, payload)
             if (data && callback) callback(data)
