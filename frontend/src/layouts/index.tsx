@@ -1,18 +1,23 @@
 import * as React from 'react'
-import { LocaleProvider, Layout, Menu, Icon, Modal, Divider } from 'antd'
+import { LocaleProvider, Layout } from 'antd'
 import { loginRoutes } from '../../config/routes.config'
 import UserLayout from './UserLayout'
+import { Header, Content, Footer } from './components'
+import styles from './index.less'
 
-class BasicLayout extends React.Component {
-    render() {
-        const { pathname } = location
-        if (loginRoutes.some(route => route.path === pathname)) {
-            return <UserLayout {...this.props}></UserLayout>
-        }
-        console.log(location.pathname)
-
-        return 666
+const BasicLayout: React.FC<any> = props => {
+    const { pathname } = location
+    if (loginRoutes.some(route => route.path === pathname)) {
+        return <UserLayout {...props}></UserLayout>
     }
+
+    return (
+        <Layout className={styles.basicLayout}>
+            <Header></Header>
+            <Content>{props.children}</Content>
+            {/* <Footer></Footer> */}
+        </Layout>
+    )
 }
 
 export default BasicLayout
