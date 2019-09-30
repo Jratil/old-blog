@@ -102,7 +102,7 @@ const Forget: React.FC<MProps> = ({ dispatch, form, loading }) => {
                     {getFieldDecorator('verifyCode', {
                         rules: rules.verifyCode,
                         validateTrigger: 'onBlur'
-                    })(<Input prefix={<MIcon type="lock" />} placeholder="verifyCode"></Input>)}
+                    })(<Input prefix={<MIcon type="code" />} placeholder="verifyCode"></Input>)}
                     <Button onClick={handleSend} className={styles.sendBtn} disabled={sendStatus}>
                         {sendText}
                     </Button>
@@ -115,8 +115,7 @@ const Forget: React.FC<MProps> = ({ dispatch, form, loading }) => {
         </Form>
     )
 }
-export default Form.create()(
-    connect(({ loading }) => ({
-        loading: loading.effects['login/forget']
-    }))(Forget)
-)
+
+export default connect(({ loading }) => ({
+    loading: loading.effects['login/forget']
+}))(Form.create()(Forget))
