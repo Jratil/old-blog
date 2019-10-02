@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Menu } from 'antd'
-import { MScreenFull } from '@/components'
+import { MScreenFull, MLanguage } from '@/components'
 import styles from '../index.less'
 const { Header } = Layout
 
@@ -13,9 +13,14 @@ const BasicHeader: React.FC<any> = props => {
                 <Menu.Item key="2">nav 2</Menu.Item>
                 <Menu.Item key="3">nav 3</Menu.Item>
             </Menu>
-            <div className={styles.rightMenu}>
-                <MScreenFull />
-            </div>
+            <ul className={styles.rightMenu}>
+                <li className={styles.menuItem}>
+                    <MScreenFull />
+                </li>
+                <li className={styles.menuItem}>
+                    <MLanguage />
+                </li>
+            </ul>
         </Header>
     )
 }
