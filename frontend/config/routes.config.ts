@@ -11,6 +11,13 @@ export interface IRoute {
 
 export const menuRoutesData: IRoute[] = [
     {
+        path: '/overview',
+        title: '总览',
+        active: 'overview',
+        component: './overview'
+        // exclude: [2]
+    },
+    {
         path: '/user',
         title: '用户主页',
         active: 'dashboard'
@@ -52,7 +59,7 @@ export default [
         routes: [
             {
                 path: '/',
-                redirect: './index'
+                redirect: './overview'
             },
             ...menuRoutesData,
             ...loginRoutes
