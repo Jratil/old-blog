@@ -1,5 +1,10 @@
 # blog
 个人博客，采用前后端分离开发  
+[登录界面](http://blog.jratil.co/login) （如果进不去登录界面请刷新一下哦）  
+[写作界面](http://blog.jratil.co/write)   
+account：123123@qq.com  
+password：123123  
+（目前只有我自己写的这几个页面啦）  
     
 > 前端开发：[lxxxv5](https://github.com/lxxxv5)  
 > 后端开发：[Jratil](https://github.com/Jratil)  
